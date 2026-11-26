@@ -1,7 +1,7 @@
 @gw = http://localhost:8080/api
 # Remplacer les dates par la date du jour et les jours suivants.
-@debut = 2026-11-25
-@fin = 2026-11-28
+@debut = 2026-11-26
+@fin = 2026-11-29
 
 ### 1. Parc
 GET {{gw}}/vehicules?carburant=DIESEL&prixMax=150
@@ -22,7 +22,7 @@ Content-Type: application/json
 POST {{gw}}/locations
 Content-Type: application/json
 
-{"clientId": 1, "vehiculeId": 4, "dateDebut": "{{debut}}", "dateFinPrevue": "{{fin}}"}
+{"clientId": 1, "vehiculeId": 8, "dateDebut": "{{debut}}", "dateFinPrevue": "{{fin}}"}
 
 ### 6. Départ
 PATCH {{gw}}/locations/7/depart
