@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    # native = dossier local config-repo ; git = dépôt GitHub
+    active: ${CONFIG_PROFILE:native}
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:./config-repo,file:../config-repo
+        git:
+          uri: ${CONFIG_GIT_URI:https://github.com/VOTRE_COMPTE/driveeasy-backend.git}
+          search-paths: config-repo
+          default-label: ${CONFIG_GIT_BRANCH:main}
+          clone-on-start: true
+server:
+  port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URL:http://localhost:9411/api/v2/spans}

@@ -1,0 +1,32 @@
+server:
+  port: 8083
+spring:
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
+      client:
+        config:
+          default:
+            connect-timeout: 2000
+            read-timeout: 4000
+app:
+  # Aucune base de données (interdit par le cahier des charges) : stockage en mémoire
+  datasource:
+    type: memory
+    seed-data: true
+  tarification:
+    coefficients:
+      CITADINE: 1.00
+      BERLINE: 1.15
+      SUV: 1.30
+      UTILITAIRE: 1.20
+      LUXE: 1.80
+    remises:
+      STANDARD: 0.00
+      FIDELE: 0.05
+      VIP: 0.10
+    multiplicateur-penalite: 1.5
+  fidelite:
+    seuil-fidele: 5
+    seuil-vip: 15

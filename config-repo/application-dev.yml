@@ -1,0 +1,8 @@
+# Profil de développement (actif par défaut) : toutes les requêtes sont tracées
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+logging:
+  level:
+    tn.driveeasy: DEBUG

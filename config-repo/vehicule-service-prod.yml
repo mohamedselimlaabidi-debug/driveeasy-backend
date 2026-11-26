@@ -1,0 +1,3 @@
+app:
+  datasource:
+    seed-data: false

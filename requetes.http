@@ -1,0 +1,52 @@
+@gw = http://localhost:8080/api
+# Remplacer les dates par la date du jour et les jours suivants.
+@debut = 2026-11-25
+@fin = 2026-11-28
+
+### 1. Parc
+GET {{gw}}/vehicules?carburant=DIESEL&prixMax=150
+
+### 2. Disponibilités (trace : gateway -> vehicule -> location)
+GET {{gw}}/vehicules/disponibles?dateDebut={{debut}}&dateFin={{fin}}
+
+### 3. Permis expiré
+GET {{gw}}/clients/3/eligibilite
+
+### 4. Simulation
+POST {{gw}}/locations/simulation
+Content-Type: application/json
+
+{"clientId": 1, "vehiculeId": 4, "dateDebut": "{{debut}}", "dateFinPrevue": "{{fin}}"}
+
+### 5. Réservation (201, location 7)
+POST {{gw}}/locations
+Content-Type: application/json
+
+{"clientId": 1, "vehiculeId": 4, "dateDebut": "{{debut}}", "dateFinPrevue": "{{fin}}"}
+
+### 6. Départ
+PATCH {{gw}}/locations/7/depart
+
+### 7. Retour en retard de la location 5 : pénalité 480 si exécuté le jour du démarrage ; client 1 -> FIDELE
+PATCH {{gw}}/locations/5/retour
+Content-Type: application/json
+
+{"kmRetour": 28500}
+
+### 8. Vérifier la catégorie
+GET {{gw}}/clients/1
+
+### 9. Détail agrégé
+GET {{gw}}/locations/7
+
+### 10. Annulation de la réservation 6
+PATCH {{gw}}/locations/6/annulation
+
+### 11. Statistiques
+GET {{gw}}/locations/statistiques
+
+### 12. Erreur 409 : immatriculation déjà utilisée
+POST {{gw}}/vehicules
+Content-Type: application/json
+
+{"immatriculation":"120 TU 1001","marque":"Fiat","modele":"500","annee":2023,"couleur":"Rouge","categorie":"CITADINE","carburant":"ESSENCE","boite":"MANUELLE","nbPlaces":4,"kilometrage":10,"prixJournalier":80}

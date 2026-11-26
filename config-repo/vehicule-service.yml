@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
+      client:
+        config:
+          default:
+            connect-timeout: 2000
+            read-timeout: 4000
+app:
+  # Aucune base de données (interdit par le cahier des charges) : stockage en mémoire
+  datasource:
+    type: memory
+    seed-data: true

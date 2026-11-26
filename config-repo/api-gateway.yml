@@ -1,0 +1,36 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: vehicule-service
+              uri: lb://vehicule-service
+              predicates:
+                - Path=/api/vehicules/**
+              filters:
+                - StripPrefix=1
+            - id: client-service
+              uri: lb://client-service
+              predicates:
+                - Path=/api/clients/**
+              filters:
+                - StripPrefix=1
+            - id: location-service
+              uri: lb://location-service
+              predicates:
+                - Path=/api/locations/**
+              filters:
+                - StripPrefix=1
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "http://localhost:4200"
+                allowed-methods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+                allowed-headers: "*"
+                exposed-headers: [Location, X-Correlation-Id]
+  # Propagation du contexte de trace dans la chaîne réactive
+  reactor:
+    context-propagation: auto

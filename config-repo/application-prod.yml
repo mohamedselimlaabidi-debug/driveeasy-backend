@@ -1,0 +1,11 @@
+# Profil de production : échantillonnage réduit, aucune donnée de démonstration
+management:
+  tracing:
+    sampling:
+      probability: 0.1
+  endpoint:
+    health:
+      show-details: never
+logging:
+  level:
+    tn.driveeasy: INFO
